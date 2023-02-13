@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "react-aggregated-calendar-v-2-client-side-solution",
+    "id": "0bd79b02-6853-4c51-bbbc-a6ea1ba36809",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.16.1"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "react-aggregated-calendar-v2 description"
+      },
+      "longDescription": {
+        "default": "react-aggregated-calendar-v2 description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "react-aggregated-calendar-v-2 Feature",
+        "description": "The feature that activates elements of the react-aggregated-calendar-v-2 solution.",
+        "id": "41587aff-742b-420a-89c4-2acb59468553",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/react-aggregated-calendar-v-2.sppkg"
+  }
+}
