@@ -1,8 +1,8 @@
-import { Version } from '@microsoft/sp-core-library';
-import { IPropertyPaneConfiguration } from '@microsoft/sp-property-pane';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-import { IReadonlyTheme } from '@microsoft/sp-component-base';
-import { SelectedCalendar } from './models/ISelectedCalendar';
+import { Version } from "@microsoft/sp-core-library";
+import { IPropertyPaneConfiguration } from "@microsoft/sp-property-pane";
+import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
+import { IReadonlyTheme } from "@microsoft/sp-component-base";
+import { SelectedCalendar } from "./models/ISelectedCalendar";
 /**
  * Interface for the Aggregated Calendar Webpart Class Properties
  *
@@ -29,5 +29,23 @@ export default class SpAggregatedCalendarWebPart extends BaseClientSideWebPart<I
     protected onDispose(): void;
     protected get dataVersion(): Version;
     protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration;
+    /**
+     * Check whether Aggregated Calendar needs configuration
+     * or not
+     * @private
+     * @returns {boolean}
+     * @memberof ReactAggregatedCalendarWebPart
+     */
+    private needsConfiguration;
+    /**
+     * Render Message method to render the message component
+     *
+     * @private
+     * @param {string} statusMessage
+     * @param {MessageBarType} statusMessageType
+     * @param {boolean} display
+     * @memberof ReactAggregatedCalendarWebPart
+     */
+    private renderMessage;
 }
 //# sourceMappingURL=SpAggregatedCalendarWebPart.d.ts.map

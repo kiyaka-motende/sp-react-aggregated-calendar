@@ -22,7 +22,10 @@
     "description": { "default": "This webpart takes an array of Sharepoint Calendars and Aggregates them using FullCalendar Js" },
     "officeFabricIconFontName": "SearchCalendar",
     "properties": {
-      "description": "SpAggregatedCalendar"
+      "description": "SpAggregatedCalendar",
+      "defaultView": "dayGridMonth",
+      "showLegend": true,
+      "dateFormat": "MMMM Do YYYY, h:mm a"
     }
   }]
 }
