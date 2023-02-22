@@ -5,15 +5,14 @@ npm-debug.log*
 
 # Dependency directories
 node_modules
+.vscode
 
 # Build generated files
 dist
-lib
 release
 solution
 temp
 *.sppkg
-.heft
 
 # Coverage directory used by tools like istanbul
 coverage
@@ -32,3 +31,10 @@ obj
 
 # Styles Generated Code
 *.scss.ts
+# .CER Certificates
+*.cer
+# .PEM Certificates
+*.pem
+
+# Environment file
+.env

@@ -3,33 +3,53 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneDropdown,
+  PropertyPaneToggle
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 import * as strings from 'SpAggregatedCalendarWebPartStrings';
-import SpAggregatedCalendar from './components/SpAggregatedCalendar';
-import { ISpAggregatedCalendarProps } from './components/ISpAggregatedCalendarProps';
+import {SpAggregatedCalendar} from './components/calendar_components/mainCalendar/SpAggregatedCalendar';
+import { ISpAggregatedCalendarProps } from './components/calendar_components/mainCalendar/ISpAggregatedCalendarProps';
+import { SelectedCalendar } from './models/ISelectedCalendar';
+import { PropertyFieldCollectionData, CustomCollectionFieldType } from '@pnp/spfx-property-controls/lib/PropertyFieldCollectionData';
+import { IDropdownOption } from '@fluentui/react';
 
+
+/**
+ * Interface for the Aggregated Calendar Webpart Class Properties
+ *
+ * @export
+ * @interface ISpAggregatedCalendarWebPartProps
+ */
 export interface ISpAggregatedCalendarWebPartProps {
-  description: string;
+  color: string;
+  header: string;
+  calendarList: SelectedCalendar[];
+  dateFormat: string;
+  showLegend: boolean;
+  defaultView: string;
 }
 
 export default class SpAggregatedCalendarWebPart extends BaseClientSideWebPart<ISpAggregatedCalendarWebPartProps> {
 
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
-
+  private availableViews: IDropdownOption[] = require("../shared/availableViews.json");
+  private timeFormat: IDropdownOption[] = require("../shared/timeFormat.json");
+  
   public render(): void {
     const element: React.ReactElement<ISpAggregatedCalendarProps> = React.createElement(
       SpAggregatedCalendar,
       {
-        description: this.properties.description,
-        isDarkTheme: this._isDarkTheme,
-        environmentMessage: this._environmentMessage,
-        hasTeamsContext: !!this.context.sdks.microsoftTeams,
-        userDisplayName: this.context.pageContext.user.displayName
+        header: this.properties.header,
+        selectedCalendarLists: this.properties.calendarList,
+        context: this.context,
+        domElement: this.domElement,
+        dateFormat: this.properties.dateFormat,
+        showLegend: this.properties.showLegend,
+        defaultView: this.properties.defaultView
       }
     );
 
@@ -100,15 +120,50 @@ export default class SpAggregatedCalendarWebPart extends BaseClientSideWebPart<I
     return {
       pages: [
         {
-          header: {
-            description: strings.PropertyPaneDescription
-          },
+          // header: {
+          //   description: strings.PropertyPaneDescription
+          // },
           groups: [
             {
-              groupName: strings.BasicGroupName,
+              // groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                // PropertyPaneTextField('header', {
+                //   label: strings.HeaderFieldLabel
+                // }),
+                
+                PropertyFieldCollectionData('calendarList', {
+                  key: 'calendarList',
+                  label: strings.SelectCalendarLabel,
+                  value: this.properties.calendarList,
+                  manageBtnLabel: 'Manage Calendar',
+                  panelHeader:'Add Calendars',
+                  fields: [
+                    { id: 'CalendarTitle', title: 'Calendar Title', required: true, type: CustomCollectionFieldType.string },
+                    { id: 'SiteUrl', title: 'Site Url', required: true, type: CustomCollectionFieldType.string },
+                    {
+                      id: 'CalendarListTitle', title: 'Calendar List Title', required: true,
+                      type: CustomCollectionFieldType.string
+                    },
+                    { id: 'Color', title: 'Color', required: false, type: CustomCollectionFieldType.color }
+                  ],
+                  disabled: false
+                }),
+                
+                PropertyPaneDropdown('dateFormat', {
+                  label: strings.SelectDateFormatFieldLabel,
+                  selectedKey: "MMMM Do YYYY, h: mm a",
+                  options: this.timeFormat
+                }),
+                PropertyPaneToggle('showLegend', {
+                  label: strings.ShowLegendFieldLabel,
+                  onText: strings.OnTextFieldLabel,
+                  offText: strings.OffTextFieldLabel,
+                  checked: false
+                }),
+                PropertyPaneDropdown('defaultView',{
+                  label: strings.DefaultView,
+                  selectedKey: "dayGridMonth",
+                  options: this.availableViews
                 })
               ]
             }

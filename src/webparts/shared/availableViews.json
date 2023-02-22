@@ -1,0 +1,19 @@
+[{
+    "key": "dayGridMonth",
+    "text": "Month"
+
+  },
+  {
+    "key": "timeGridWeek",
+    "text": "Weekly"
+  },
+  {
+    "key": "timeGridDay",
+    "text": "Daily"
+  },
+  {
+    "key": "listMonth",
+    "text": "Monthly List"
+
+  }
+]

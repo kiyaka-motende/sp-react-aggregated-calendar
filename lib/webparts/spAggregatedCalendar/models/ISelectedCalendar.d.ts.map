@@ -1,0 +1,1 @@
+{"version":3,"file":"ISelectedCalendar.d.ts","sourceRoot":"","sources":["../../../../src/webparts/spAggregatedCalendar/models/ISelectedCalendar.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AACF,MAAM,WAAW,gBAAgB;IAC9B,aAAa,EAAE,MAAM,CAAC;IACtB,OAAO,EAAE,MAAM,CAAC;IAChB,iBAAiB,EAAE,MAAM,CAAC;IAC1B,KAAK,EAAE,MAAM,CAAC;CACf"}

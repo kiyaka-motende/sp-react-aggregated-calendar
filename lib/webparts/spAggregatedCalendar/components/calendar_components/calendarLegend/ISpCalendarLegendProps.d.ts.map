@@ -1,0 +1,1 @@
+{"version":3,"file":"ISpCalendarLegendProps.d.ts","sourceRoot":"","sources":["../../../../../../src/webparts/spAggregatedCalendar/components/calendar_components/calendarLegend/ISpCalendarLegendProps.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAE,MAAM,mCAAmC,CAAC;AACrE,MAAM,WAAW,sBAAsB;IACnC,qBAAqB,EAAE,gBAAgB,EAAE,CAAC;CAC7C"}
