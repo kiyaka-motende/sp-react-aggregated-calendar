@@ -1,3 +1,4 @@
+/* eslint-disable react/self-closing-comp */
 import * as React from "react";
 import { ISpAggregatedCalendarProps } from "./ISpAggregatedCalendarProps";
 import styles from "./SpAggregatedCalendar.module.scss";
@@ -37,6 +38,7 @@ export enum formTypes {
   delete = 3,
 }
 
+
 export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendarProps> = (
   props: ISpAggregatedCalendarProps
 ) => {
@@ -67,6 +69,13 @@ export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendar
   const [menuListItems, setMenuListItems] = React.useState([]);
   const [selectedListTitlle, setSelectedListTitle] = React.useState("");
   const theme = getTheme();
+  const calendarComponentRef:any = React.createRef();
+
+  const navigateCalendar = (date:Date):void=>{
+    const calendarApi = calendarComponentRef.current.getApi();
+    calendarApi.gotoDate(date);
+    
+  }
 
   return (
     <div className={styles.spAggregatedCalendar}>
@@ -108,7 +117,7 @@ export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendar
                 showMonthPickerAsOverlay
                 highlightSelectedMonth
                 showGoToToday={true}
-                // onSelectDate={this._navigateCalendar}
+                onSelectDate={(date)=>navigateCalendar(date)}
                 // value={selectedDate}
                 // Calendar uses English strings by default. For localized apps, you must override this prop.
                 strings={defaultCalendarStrings}
@@ -153,6 +162,7 @@ export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendar
                 navLinks={true}
                 editable={true}
                 aspectRatio={2}
+                ref = {calendarComponentRef}
                 // eventLimit = {3}
                 fixedWeekCount={false}
                 // eventClick={this.eventClickHandler}
