@@ -25,7 +25,7 @@ export const SpCalendarLegend: React.FunctionComponent<
     ) {
       outerClass = styles.selected;
     } else outerClass = styles.washout;
-
+    console.log(styles.innerLegendDiv);
     return (
       // eslint-disable-next-line react/jsx-key
       <div
@@ -33,7 +33,7 @@ export const SpCalendarLegend: React.FunctionComponent<
         title={calendar.CalendarTitle}
       >
         <div
-          className={styles.innerLegendDiv}
+          className={`${styles.innerLegendDiv}`}
           style={calendarLegendColor}
           onClick={(e) => {
             setisCalendarFiltered(!isCalendarFiltered);
@@ -44,5 +44,5 @@ export const SpCalendarLegend: React.FunctionComponent<
       </div>
     );
   });
-  return <span>{calendarLegend}</span>;
+  return(<div className={styles.calendarLegend}>{calendarLegend}</div>);
 };

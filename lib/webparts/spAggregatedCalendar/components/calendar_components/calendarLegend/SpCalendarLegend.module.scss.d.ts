@@ -1,6 +1,5 @@
 declare const styles: {
     calendarLegend: string;
-    legend: string;
     outerLegendDiv: string;
     washout: string;
     selected: string;

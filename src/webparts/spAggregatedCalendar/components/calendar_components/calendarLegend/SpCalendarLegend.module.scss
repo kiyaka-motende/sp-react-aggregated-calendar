@@ -1,41 +1,34 @@
 @import '~@fluentui/react/dist/sass/References.scss';
 
 .calendarLegend{
-    .legend {
-        border: solid 1px #eee;
-        font-size: 14px;
-        text-align: left;
-        white-space: normal;
-        }
+  .outerLegendDiv {
+    display: inline-block;
+    padding: 5px 20px 5px 5px;
+    line-height: 15px;
+    max-width: 300px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
     
-      .outerLegendDiv {
-        display: inline-block;
-        padding: 5px 20px 5px 5px;
-        line-height: 15px;
-        max-width: 300px;
-        cursor: pointer;
-        overflow: hidden;
-        text-overflow: ellipsis;
+  .washout {
+    opacity: 0.5;
+    }
+    
+  .selected {
+    opacity: 1;
       }
     
-      .washout {
-        opacity: 0.5;
-      }
-    
-      .selected {
-        opacity: 1;
-      }
-    
-      .innerLegendDiv {
-        border: 1px solid gray;
-        width: 15px;
-        height: 15px;
-        font-size: 1px;
-        position: relative;
-        float: left;
-        margin-right: 5px;
-        cursor: pointer;
-      }
+  .innerLegendDiv {
+    border: 1px solid gray;
+    width: 15px;
+    height: 15px;
+    font-size: 1px;
+    position: relative;
+    float: left;
+    margin-right: 5px;
+    cursor: pointer;
+  }
 }
 
   

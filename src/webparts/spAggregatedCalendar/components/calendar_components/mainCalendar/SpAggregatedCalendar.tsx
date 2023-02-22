@@ -118,11 +118,12 @@ export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendar
                 {props.showLegend && (
                   <div>
                     <p>Calendars in View:</p>
-                    <div>
-                      <SpCalendarLegend
+                    <div className={styles.legend}>
+                    <SpCalendarLegend
                         selectedCalendarLists={props.selectedCalendarLists}
-                      />{" "}
+                      />
                     </div>
+
                   </div>
                 )}
               </Stack>

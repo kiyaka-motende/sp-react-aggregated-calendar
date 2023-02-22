@@ -8,6 +8,12 @@
   &.teams {
     font-family: $ms-font-family-fallbacks;
   }
+  .legend {
+    border: solid 1px #eee;
+    font-size: 14px;
+    text-align: left;
+    white-space: normal;
+  }
 }
 
 .welcome {
