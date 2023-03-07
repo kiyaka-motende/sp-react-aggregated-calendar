@@ -18,6 +18,9 @@ import {
   Stack,
 } from "@fluentui/react";
 import { SpCalendarLegend } from "../calendarLegend/SpCalendarLegend";
+import { IEventData } from "../../../services/IEventData";
+import spservices from "../../../services/spservices";
+import { timeToUntilString } from "rrule/dist/esm/dateutil";
 
 const containerStackTokens: IStackTokens = { childrenGap: 5 };
 const verticalGapStackTokens: IStackTokens = {
@@ -68,11 +71,57 @@ export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendar
   const [formTypeControl, setFormTypeControl] = React.useState(formTypes.new);
   const [menuListItems, setMenuListItems] = React.useState([]);
   const [selectedListTitlle, setSelectedListTitle] = React.useState("");
+  const [eventSourcesArray,setEvents] = React.useState([]);
+  const [viewDateRange, setViewDateRange] = React.useState<{start:Date, end:Date}>({start:moment().startOf("month").toDate(), end:moment().endOf("month").toDate()});
+  const _dataService: spservices = new spservices(props.context);
+  React.useEffect(() => {
+    function fetchEvents() {
+      const myEvents: any = [];
+      const promises = props.selectedCalendarLists.map(calendarData =>
+        _dataService.getEvents(
+          escape(calendarData.SiteUrl),
+          escape(calendarData.CalendarListTitle),
+          viewDateRange.start,
+          viewDateRange.end
+        )
+        .then(eventsData => {
+          myEvents.push({ id: calendarData.CalendarTitle, events: eventsData });
+        })
+        .catch(error => {
+          console.error(error);
+        })
+      );
+  
+      return Promise.all(promises).then(() => myEvents); // Wait for all promises to resolve
+    }
+  
+    fetchEvents()
+      .then(myEvents => {
+        console.log(myEvents);
+        setEvents(myEvents);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, [viewDateRange]);
+  
+  
+  
+  
+  
+  const handleDateSet = (info:any):void=>{
+    
+    const { view, start, end } = info;
+    console.log(`Visible range in ${view.type} view: ${start} - ${end}`);
+    setViewDateRange({start:start, end:end})
+  }
+
   const theme = getTheme();
   const calendarComponentRef:any = React.createRef();
 
   const navigateCalendar = (date:Date):void=>{
     const calendarApi = calendarComponentRef.current.getApi();
+    console.log(calendarApi.getEventSources());
     calendarApi.gotoDate(date);
     
   }
@@ -163,29 +212,11 @@ export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendar
                 editable={true}
                 aspectRatio={2}
                 ref = {calendarComponentRef}
+                datesSet = {handleDateSet}
                 // eventLimit = {3}
                 fixedWeekCount={false}
                 // eventClick={this.eventClickHandler}
-                eventSources={[
-                  {
-                    events: [
-                      {
-                        title: "event1",
-                        start: "2023-02-01",
-                      },
-                      {
-                        title: "event2",
-                        start: "2023-02-05",
-                        end: "2023-02-07",
-                      },
-                      {
-                        title: "event3",
-                        start: "2023-02-09T12:30:00",
-                        allDay: false, // will make the time show
-                      },
-                    ],
-                  },
-                ]}
+                eventSources={eventSourcesArray}
               ></FullCalendar>
             </div>
           </Stack>

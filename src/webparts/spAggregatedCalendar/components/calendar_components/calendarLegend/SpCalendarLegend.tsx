@@ -15,7 +15,6 @@ export const SpCalendarLegend: React.FunctionComponent<
     const calendarLegendColor = {
       backgroundColor: `${calendar.Color}`,
     };
-    console.log(calendarLegendColor);
     let outerClass: string;
     if (!isCalendarFiltered) {
       outerClass = styles.selected;
@@ -25,7 +24,6 @@ export const SpCalendarLegend: React.FunctionComponent<
     ) {
       outerClass = styles.selected;
     } else outerClass = styles.washout;
-    console.log(styles.innerLegendDiv);
     return (
       // eslint-disable-next-line react/jsx-key
       <div

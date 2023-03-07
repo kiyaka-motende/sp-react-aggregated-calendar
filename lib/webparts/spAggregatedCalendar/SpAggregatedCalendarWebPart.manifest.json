@@ -18,7 +18,7 @@
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Advanced
     "group": { "default": "Advanced" },
-    "title": { "default": "Sp Events Calendar Aggregator Webpart" },
+    "title": { "default": "Events Aggregator Webpart" },
     "description": { "default": "This webpart takes an array of Sharepoint Calendars and Aggregates them using FullCalendar Js" },
     "officeFabricIconFontName": "SearchCalendar",
     "properties": {

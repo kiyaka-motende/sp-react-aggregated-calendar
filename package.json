@@ -24,13 +24,16 @@
     "@microsoft/sp-office-ui-fabric-core": "1.16.1",
     "@microsoft/sp-property-pane": "1.16.1",
     "@microsoft/sp-webpart-base": "1.16.1",
+    "@pnp/graph": "^3.12.1",
     "@pnp/spfx-property-controls": "^3.10.0",
     "moment": "^2.29.4",
     "office-ui-fabric-react": "^7.199.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "rrule": "^2.7.2",
-    "tslib": "2.3.1"
+    "string-format": "^2.0.0",
+    "tslib": "2.3.1",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@microsoft/eslint-config-spfx": "1.16.1",
@@ -42,6 +45,7 @@
     "@types/react": "17.0.45",
     "@types/react-dom": "17.0.17",
     "@types/webpack-env": "~1.15.2",
+    "@types/xml2js": "^0.4.11",
     "ajv": "^6.12.5",
     "eslint-plugin-react-hooks": "4.3.0",
     "gulp": "4.0.2",

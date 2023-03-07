@@ -157,7 +157,7 @@ export default class SpAggregatedCalendarWebPart extends BaseClientSideWebPart<I
           // },
           groups: [
             {
-              // groupName: strings.BasicGroupName,
+              groupName: "Webpart Configuration",
               groupFields: [
                 // PropertyPaneTextField('header', {
                 //   label: strings.HeaderFieldLabel
