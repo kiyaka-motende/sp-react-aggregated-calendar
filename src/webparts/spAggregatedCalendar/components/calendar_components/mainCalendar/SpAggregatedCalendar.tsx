@@ -41,10 +41,9 @@ export enum formTypes {
   delete = 3,
 }
 
-
-export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendarProps> = (
-  props: ISpAggregatedCalendarProps
-) => {
+export const SpAggregatedCalendar: React.FunctionComponent<
+  ISpAggregatedCalendarProps
+> = (props: ISpAggregatedCalendarProps) => {
   const [isCalloutVisible, setCalloutVisible] = React.useState(false);
   const [selectedCalendarList, setSelectedCalendarList] = React.useState([]);
   const [calendarEvents, setCalendarEvents] = React.useState([]);
@@ -71,60 +70,64 @@ export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendar
   const [formTypeControl, setFormTypeControl] = React.useState(formTypes.new);
   const [menuListItems, setMenuListItems] = React.useState([]);
   const [selectedListTitlle, setSelectedListTitle] = React.useState("");
-  const [eventSourcesArray,setEvents] = React.useState([]);
-  const [viewDateRange, setViewDateRange] = React.useState<{start:Date, end:Date}>({start:moment().startOf("month").toDate(), end:moment().endOf("month").toDate()});
+  const [eventSourcesArray, setEvents] = React.useState([]);
+  const [viewDateRange, setViewDateRange] = React.useState<{
+    start: Date;
+    end: Date;
+  }>({
+    start: moment().startOf("month").toDate(),
+    end: moment().endOf("month").toDate(),
+  });
   const _dataService: spservices = new spservices(props.context);
   React.useEffect(() => {
     function fetchEvents() {
-      const myEvents: any = [];
-      const promises = props.selectedCalendarLists.map(calendarData =>
-        _dataService.getEvents(
-          escape(calendarData.SiteUrl),
-          escape(calendarData.CalendarListTitle),
-          viewDateRange.start,
-          viewDateRange.end
-        )
-        .then(eventsData => {
-          myEvents.push({ id: calendarData.CalendarTitle, events: eventsData });
-        })
-        .catch(error => {
-          console.error(error);
-        })
+      let myEvents: any = [];
+      const promises = props.selectedCalendarLists.map((calendarData) =>
+        _dataService
+          .getEvents(
+            escape(calendarData.SiteUrl),
+            escape(calendarData.CalendarListTitle),
+            viewDateRange.start,
+            viewDateRange.end
+          )
+          .then((eventsData) => {
+            myEvents.push({
+              id: calendarData.CalendarTitle,
+              events: eventsData,
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       );
-  
+
       return Promise.all(promises).then(() => myEvents); // Wait for all promises to resolve
     }
-  
+
     fetchEvents()
-      .then(myEvents => {
+      .then((myEvents) => {
         console.log(myEvents);
         setEvents(myEvents);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }, [viewDateRange]);
-  
-  
-  
-  
-  
-  const handleDateSet = (info:any):void=>{
-    
+
+  const handleDateSet = (info: any): void => {
     const { view, start, end } = info;
     console.log(`Visible range in ${view.type} view: ${start} - ${end}`);
-    setViewDateRange({start:start, end:end})
-  }
+    setViewDateRange({ start: start, end: end });
+  };
 
   const theme = getTheme();
-  const calendarComponentRef:any = React.createRef();
+  const calendarComponentRef: any = React.createRef();
 
-  const navigateCalendar = (date:Date):void=>{
+  const navigateCalendar = (date: Date): void => {
     const calendarApi = calendarComponentRef.current.getApi();
     console.log(calendarApi.getEventSources());
     calendarApi.gotoDate(date);
-    
-  }
+  };
 
   return (
     <div className={styles.spAggregatedCalendar}>
@@ -166,7 +169,7 @@ export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendar
                 showMonthPickerAsOverlay
                 highlightSelectedMonth
                 showGoToToday={true}
-                onSelectDate={(date)=>navigateCalendar(date)}
+                onSelectDate={(date) => navigateCalendar(date)}
                 // value={selectedDate}
                 // Calendar uses English strings by default. For localized apps, you must override this prop.
                 strings={defaultCalendarStrings}
@@ -177,11 +180,10 @@ export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendar
                   <div>
                     <p>Calendars in View:</p>
                     <div className={styles.legend}>
-                    <SpCalendarLegend
+                      <SpCalendarLegend
                         selectedCalendarLists={props.selectedCalendarLists}
                       />
                     </div>
-
                   </div>
                 )}
               </Stack>
@@ -211,12 +213,30 @@ export const SpAggregatedCalendar: React.FunctionComponent<ISpAggregatedCalendar
                 navLinks={true}
                 editable={true}
                 aspectRatio={2}
-                ref = {calendarComponentRef}
-                datesSet = {handleDateSet}
+                ref={calendarComponentRef}
+                datesSet={handleDateSet}
                 // eventLimit = {3}
                 fixedWeekCount={false}
                 // eventClick={this.eventClickHandler}
-                eventSources={eventSourcesArray}
+                eventSources={[
+                  {
+                    events: [
+                      {
+                        id: "81",
+                        title: "Ruma NP setup and installation",
+                        Description: "",
+                        start: "2023-05-07T21:00:00.000Z",
+                        end: "2023-05-12T20:59:00.000Z",
+                        location: "Ruma NP",
+                        geolocation: {
+                          Longitude: null,
+                          Latitude: null,
+                        },
+                        Category: ""
+                      }
+                    ],
+                  },
+                ]}
               ></FullCalendar>
             </div>
           </Stack>
