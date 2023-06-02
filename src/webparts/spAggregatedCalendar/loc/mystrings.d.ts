@@ -104,6 +104,7 @@ declare interface ISpAggregatedCalendarWebPartStrings {
   ShortDay_T: string,
   ShortDay_M: string,
   ShortDay_S: string,
+  LoadingEventsLabel:string
 }
 
 declare module 'SpAggregatedCalendarWebPartStrings' {

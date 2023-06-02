@@ -116,9 +116,9 @@ export default class spservices {
       return [];
     }
     const parseEvt: parseRecurrentEvent = new parseRecurrentEvent();
-    const web = new Web(siteUrl);
       
     try {
+      console.log(moment(eventStartDate).format('YYYY-MM-DD'));
       const web = new Web(siteUrl);
       const results = await web.lists
         .getByTitle(listTitle)
@@ -164,6 +164,7 @@ export default class spservices {
             //     return value.category == event.Category;
             //   });
             const isAllDayEvent: boolean = event["fAllDayEvent.value"] === "1";
+            const isRecurring: boolean = event["fRecurrence.value"] === "1";
 
             for (const attendee of event.ParticipantsPicker) {
               attendees.push(parseInt(attendee.id));
@@ -189,14 +190,15 @@ export default class spservices {
               // color: CategoryColorValue.length > 0 ? CategoryColorValue[0].color : '#1a75ff', // blue default
               ownerName: event.Author[0].title,
               attendes: attendees,
-              fAllDayEvent: isAllDayEvent,
               geolocation: {
                 Longitude: parseFloat(geolocation[0]),
                 Latitude: parseFloat(geolocation[1]),
               },
               Category: event.Category,
               Duration: event.Duration,
-              rrule: event.fRecurrence
+              RecurrenceData:event.RecurrenceData,
+              allDay:isAllDayEvent,
+              rrule: isRecurring
                 ? RRule.fromText(
                     event.EventType === "4" && event.MasterSeriesItemID !== ""
                       ? await parseEvt.deCodeHtmlEntities(event.RecurrenceData)
@@ -215,40 +217,7 @@ export default class spservices {
           }
           return true;
         };
-        //Checks to see if there are any results saved in local storage
-        if (window.localStorage.getItem("eventResult")) {
-          //if there is a local version - compares it to the current version
-          if (
-            window.localStorage.getItem("eventResult") ===
-            JSON.stringify(results)
-          ) {
-            //No update needed use current savedEvents
-            events = JSON.parse(
-              window.localStorage.getItem("calendarEventsWithLocalTime")
-            );
-          } else {
-            //update local storage
-            window.localStorage.setItem("eventResult", JSON.stringify(results));
-            //when they are not equal then we loop through the results and maps them to IEventData
-            /* tslint:disable:no-unused-expression */
-            (await mapEvents())
-              ? window.localStorage.setItem(
-                  "calendarEventsWithLocalTime",
-                  JSON.stringify(events)
-                )
-              : null;
-          }
-        } else {
-          //if there is no local storage of the events we create them
-          window.localStorage.setItem("eventResult", JSON.stringify(results));
-          //we also needs to map through the events the first time and save the mapped version to local storage
-          (await mapEvents())
-            ? window.localStorage.setItem(
-                "calendarEventsWithLocalTime",
-                JSON.stringify(events)
-              )
-            : null;
-        }
+        await mapEvents();
       }
 
       //   events = parseEvt.parseEvents(events, null, null);

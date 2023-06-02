@@ -16,11 +16,15 @@ import {
   getTheme,
   IStackTokens,
   Stack,
+  Spinner,
+  SpinnerSize
 } from "@fluentui/react";
+import * as strings from "SpAggregatedCalendarWebPartStrings";
 import { SpCalendarLegend } from "../calendarLegend/SpCalendarLegend";
 import { IEventData } from "../../../services/IEventData";
 import spservices from "../../../services/spservices";
 import { timeToUntilString } from "rrule/dist/esm/dateutil";
+
 
 const containerStackTokens: IStackTokens = { childrenGap: 5 };
 const verticalGapStackTokens: IStackTokens = {
@@ -70,6 +74,7 @@ export const SpAggregatedCalendar: React.FunctionComponent<
   const [formTypeControl, setFormTypeControl] = React.useState(formTypes.new);
   const [menuListItems, setMenuListItems] = React.useState([]);
   const [selectedListTitlle, setSelectedListTitle] = React.useState("");
+  const [isLoading, calendarIsLoading]=React.useState(false);
   const [eventSourcesArray, setEvents] = React.useState([]);
   const [viewDateRange, setViewDateRange] = React.useState<{
     start: Date;
@@ -94,6 +99,7 @@ export const SpAggregatedCalendar: React.FunctionComponent<
             myEvents.push({
               id: calendarData.CalendarTitle,
               events: eventsData,
+              color: calendarData.Color
             });
           })
           .catch((error) => {
@@ -108,16 +114,18 @@ export const SpAggregatedCalendar: React.FunctionComponent<
       .then((myEvents) => {
         console.log(myEvents);
         setEvents(myEvents);
+        calendarIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [viewDateRange]);
+  }, [viewDateRange, isLoading]);
 
   const handleDateSet = (info: any): void => {
     const { view, start, end } = info;
     console.log(`Visible range in ${view.type} view: ${start} - ${end}`);
     setViewDateRange({ start: start, end: end });
+    calendarIsLoading(true);
   };
 
   const theme = getTheme();
@@ -189,7 +197,7 @@ export const SpAggregatedCalendar: React.FunctionComponent<
               </Stack>
             </Stack>
             <div>
-              <FullCalendar
+              {isLoading ? <Spinner size={SpinnerSize.large} label={strings.LoadingEventsLabel}/> : <FullCalendar
                 plugins={[
                   timeGridPlugin,
                   dayGridPlugin,
@@ -218,26 +226,9 @@ export const SpAggregatedCalendar: React.FunctionComponent<
                 // eventLimit = {3}
                 fixedWeekCount={false}
                 // eventClick={this.eventClickHandler}
-                eventSources={[
-                  {
-                    events: [
-                      {
-                        id: "81",
-                        title: "Ruma NP setup and installation",
-                        Description: "",
-                        start: "2023-05-07T21:00:00.000Z",
-                        end: "2023-05-12T20:59:00.000Z",
-                        location: "Ruma NP",
-                        geolocation: {
-                          Longitude: null,
-                          Latitude: null,
-                        },
-                        Category: ""
-                      }
-                    ],
-                  },
-                ]}
-              ></FullCalendar>
+                eventSources={eventSourcesArray}
+              ></FullCalendar>}
+              
             </div>
           </Stack>
         </Stack>

@@ -11,7 +11,7 @@ export interface IEventData {
     ownerPhoto?: string;
     ownerEmail?: string;
     ownerName?: string;
-    fAllDayEvent?: boolean;
+    allDay?: boolean;
     attendes?: number[];
     geolocation?: { Longitude: number, Latitude: number };
     Category?: string;
