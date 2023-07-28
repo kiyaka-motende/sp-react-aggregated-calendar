@@ -125,7 +125,7 @@ export const SpAggregatedCalendar: React.FunctionComponent<
     const { view, start, end } = info;
     console.log(`Visible range in ${view.type} view: ${start} - ${end}`);
     setViewDateRange({ start: start, end: end });
-    calendarIsLoading(true);
+    // calendarIsLoading(true);
   };
 
   const theme = getTheme();
