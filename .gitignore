@@ -38,3 +38,6 @@ obj
 
 # Environment file
 .env
+
+#npm config
+.npmrc
