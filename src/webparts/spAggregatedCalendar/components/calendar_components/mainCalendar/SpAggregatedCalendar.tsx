@@ -1,5 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 import * as React from "react";
+import { useImmerReducer } from 'use-immer';
 import { ISpAggregatedCalendarProps } from "./ISpAggregatedCalendarProps";
 import styles from "./SpAggregatedCalendar.module.scss";
 import { escape } from "@microsoft/sp-lodash-subset";
@@ -48,6 +49,8 @@ export enum formTypes {
 export const SpAggregatedCalendar: React.FunctionComponent<
   ISpAggregatedCalendarProps
 > = (props: ISpAggregatedCalendarProps) => {
+
+//Define State Variables and their updater functions
   const [isCalloutVisible, setCalloutVisible] = React.useState(false);
   const [selectedCalendarList, setSelectedCalendarList] = React.useState([]);
   const [calendarEvents, setCalendarEvents] = React.useState([]);
@@ -83,7 +86,12 @@ export const SpAggregatedCalendar: React.FunctionComponent<
     start: moment().startOf("month").toDate(),
     end: moment().endOf("month").toDate(),
   });
+  //Define State Variables and their updater functions
+
+
   const _dataService: spservices = new spservices(props.context);
+
+  //Function used to fetch data from sharepoint when user changes dates on calendar.
   React.useEffect(() => {
     function fetchEvents() {
       let myEvents: any = [];
@@ -120,6 +128,7 @@ export const SpAggregatedCalendar: React.FunctionComponent<
         console.error(error);
       });
   }, [viewDateRange, isLoading]);
+  //Function used to fetch data from sharepoint when user changes dates on calendar.
 
   const handleDateSet = (info: any): void => {
     const { view, start, end } = info;

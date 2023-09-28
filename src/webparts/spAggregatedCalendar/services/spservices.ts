@@ -128,16 +128,28 @@ export default class spservices {
           ViewXml: `<View><ViewFields><FieldRef Name='RecurrenceData'/><FieldRef Name='Duration'/><FieldRef Name='Author'/><FieldRef Name='Category'/><FieldRef Name='Description'/><FieldRef Name='ParticipantsPicker'/><FieldRef Name='Geolocation'/><FieldRef Name='ID'/><FieldRef Name='EndDate'/><FieldRef Name='EventDate'/><FieldRef Name='ID'/><FieldRef Name='Location'/><FieldRef Name='Title'/><FieldRef Name='fAllDayEvent'/><FieldRef Name='EventType'/><FieldRef Name='UID' /><FieldRef Name='fRecurrence' /></ViewFields>
           <Query>
           <Where>
-            <And>
-              <Geq>
-                <FieldRef Name='EventDate' />
-                <Value IncludeTimeValue='false' Type='DateTime'>${moment(eventStartDate).format('YYYY-MM-DD')}</Value>
-              </Geq>
-              <Leq>
-                <FieldRef Name='EventDate' />
-                <Value IncludeTimeValue='false' Type='DateTime'>${moment(eventEndDate).format('YYYY-MM-DD')}</Value>
-              </Leq>
-              </And>
+            <Or>
+              <And>
+                <Geq>
+                  <FieldRef Name='EventDate' />
+                  <Value IncludeTimeValue='false' Type='DateTime'>${moment(eventStartDate).format('YYYY-MM-DD')}</Value>
+                </Geq>
+                <Leq>
+                  <FieldRef Name='EventDate' />
+                  <Value IncludeTimeValue='false' Type='DateTime'>${moment(eventEndDate).format('YYYY-MM-DD')}</Value>
+                </Leq>
+                </And>
+                <And>
+                <Geq>
+                  <FieldRef Name='EndDate' />
+                  <Value IncludeTimeValue='false' Type='DateTime'>${moment(eventStartDate).format('YYYY-MM-DD')}</Value>
+                </Geq>
+                <Leq>
+                  <FieldRef Name='EndDate' />
+                  <Value IncludeTimeValue='false' Type='DateTime'>${moment(eventEndDate).format('YYYY-MM-DD')}</Value>
+                </Leq>
+              </And>                
+            </Or>
           </Where>
           </Query>      
           <RowLimit Paged="FALSE">2000</RowLimit>
